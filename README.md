@@ -66,7 +66,7 @@ The reasons why choosing S-expression as the form of regex are:
 ​	For function `cat`: It receives arbitrarily number of arguments. The valid arguments have three types: char, string, and other S-expressions. It generates a regex which all of its arguments are catenated. For example: 
 
 ```
-	(cat a b c) 
+   (cat a b c) 
 
 == (cat ab c) 
 
@@ -82,7 +82,7 @@ The order of its arguments matters since all of its arguments will be catenated 
 ​	For function `or`: It is similar to the cat, except that it makes all of its arguments as alternatives. For example:
 
 ```
-	(or a b c) 
+   (or a b c) 
 
 == a|b|c
 ```
@@ -90,11 +90,11 @@ The order of its arguments matters since all of its arguments will be catenated 
 Note that not like `cat`, `(or abc)` `(or ab c)` `(or a bc)` are not equivalent. They are 
 
 ```
-	abc|λ  
+abc|λ  
 
-	(ab)|c 
+(ab)|c 
 
-	a|(bc)
+a|(bc)
 ```
 
 respectively.
@@ -102,29 +102,29 @@ respectively.
 ​	For function `mul`: it only receives one argument, which should be char, string, or another S-expression. **Surplus arguments will be ignored**. It will return true if the argument repeats zero or more times. For example:
 
 ```
-	(mul a) == a*
+(mul a) == a*
 
-	(mul abc) == (abc)*
+(mul abc) == (abc)*
 	
-	(mul abc def) == (abc)*
+(mul abc def) == (abc)*
 ```
 
 ​	For function `pls`: Same as function `mul`. Except that it requires the argument to repeat at least once. For example:
 
 ```
-    (pls a) == a+
+(pls a) == a+
 
-    (pls abc) == (abc)+
+(pls abc) == (abc)+
     
-    (pls abc def) == (abc)+
+(pls abc def) == (abc)+
 ```
 
 ​	For function `range`: it only receives two arguments which can only be **character**. First one is the start character, second one is the end character. For example:
 
 ```
-	(range a z) == [a-z]
+(range a z) == [a-z]
 	
-	(range 0 9) == [0-9]
+(range 0 9) == [0-9]
 ```
 
 ##### **Structure of the script file**
@@ -148,20 +148,20 @@ After reading the script and generating corresponding regex in memory, the proce
 ​    First `scanner_main()` in **scanner_main.c** will call `next_unit()` defined in **sscanner.c**. It is similar to the function `next_token()`, but it directly returns the unit string it reads. Here the unit string is the string separated by blank and control characters in the source file. For example, if the file contains:
 
 ```
-	int main() {
-		int a;
-	}
+int main() {
+	int a;
+}
 ```
 
 Then the return values of `next_unit()` will be:
 
 ```
-	int
-	main()
-	{
-	int
-	a;
-	}
+int
+main()
+{
+int
+a;
+}
 ```
 
 Note that 'main()' and 'a;' are returned as a whole since they are not separated by blanks. The return value will be sent to function `languagep()` defined in **spredicate.c** for finding matching token. 'p' here means predicate, and 'languagep' means 'predicate for deciding whether the string is the language of the regex'. `languagep()` will go through all regex to find the rule that can match the input as long as possible. If there are several rules match the same length of the input, the first one defined will be returned. The `languagep()` will return the token id for accessing the token name. If not found, it will return `-1`. Also if the input is partly matched, `scanner_main()` will keep the scanned index for matching the remaining part of the input.
@@ -199,14 +199,14 @@ Note that 'main()' and 'a;' are returned as a whole since they are not separated
 ​    Input file `tests.file`:
 
 ```C
-	void destruct_globals() {
-        for (int i = 0; i < regexlength; i++) {
-            free_expression(get(&regex, i));
-        }
-        free_content(&token_names);
-        destruct(&regex);
-        destruct(&token_names);
-	}
+void destruct_globals() {
+    for (int i = 0; i < regexlength; i++) {
+        free_expression(get(&regex, i));
+    }
+    free_content(&token_names);
+    destruct(&regex);
+    destruct(&token_names);
+}
 ```
 
 ​	Command (suppose that `micro_c.tokens` is under the working directory):
