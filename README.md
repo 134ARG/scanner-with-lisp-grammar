@@ -1,4 +1,4 @@
-# scanner-with-lisp-grammer
+# scanner-with-lisp-grammar
 general scanner accepting s-expression definition for tokens
 
 ### **Method and Design**
