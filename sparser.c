@@ -53,7 +53,7 @@ void parse_s() {
                 push(&regex, p);
             } else {
                 expression *current = top(expr_stack);
-                push(current->data.param, p);
+                push(current->value.param, p);
             }
             push(expr_stack, p);
 
@@ -71,7 +71,7 @@ void parse_s() {
             }
         } else {
             expression *p = top(expr_stack);
-            push(p->data.param, make_expression(ATOM, -1, copy_string(Text)));
+            push(p->value.param, make_expression(ATOM, -1, copy_string(Text)));
         }
         unit = next_token();
     }

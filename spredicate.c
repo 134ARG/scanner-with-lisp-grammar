@@ -22,20 +22,20 @@ int range(const char *str, size_t *i, struct stack *params);
 // apply the input string to regex functions
 int apply(const char *str, size_t *i, expression *e) {
     if (e->type == ATOM) {
-        int res = !strncmp(str + *i, e->data.str, strlen(e->data.str));
+        int res = !strncmp(str + *i, e->value.str, strlen(e->value.str));
 
         if (res) {
-            *i += strlen(e->data.str);
+            *i += strlen(e->value.str);
             return TRUE;
         }
         return FALSE;
     }
     switch (e->funcode) {
-        case 0: return cat(str, i, e->data.param);
-        case 1: return or(str, i, e->data.param);
-        case 2: return pls(str, i, e->data.param);
-        case 3: return mul(str, i, e->data.param);
-        case 4: return range(str, i, e->data.param);
+        case 0: return cat(str, i, e->value.param);
+        case 1: return or(str, i, e->value.param);
+        case 2: return pls(str, i, e->value.param);
+        case 3: return mul(str, i, e->value.param);
+        case 4: return range(str, i, e->value.param);
         default: exit(1);
     }
 }
@@ -85,8 +85,8 @@ int range(const char *str, size_t *i, struct stack *params) {
     struct expression *start = get(params, 0);
     struct expression *end = get(params, 1);
     if (start->type != ATOM || end->type != ATOM) exit(1);
-    if (*(str + *i) >= start->data.str[0] &&
-        *(str + *i) <= end->data.str[0]) {
+    if (*(str + *i) >= start->value.str[0] &&
+        *(str + *i) <= end->value.str[0]) {
         (*i)++;
         return TRUE;
     }

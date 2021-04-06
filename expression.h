@@ -13,12 +13,13 @@ enum expr_type {
 };
 
 typedef struct expression {
+    char *name;
     int funcode;
     int type;
     union {
         struct stack *param;
         char *str;
-    } data;
+    } value;
 } expression;
 
 expression *make_expression(int type, int funcode, void *data);
